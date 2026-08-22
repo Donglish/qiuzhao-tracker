@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>秋招投递记录</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="stats-bar" id="stats-bar"></header>
+
+  <div class="layout">
+    <aside class="todo-panel">
+      <h2>近 7 天待办</h2>
+      <ul id="todo-list" class="todo-list"></ul>
+    </aside>
+
+    <main class="content">
+      <div class="toolbar">
+        <div class="view-toggle">
+          <button id="view-table-btn" class="active">表格</button>
+          <button id="view-kanban-btn">看板</button>
+        </div>
+        <input type="search" id="search-input" placeholder="搜索公司 / 岗位 / 城市 / 备注">
+        <select id="status-filter">
+          <option value="">全部状态</option>
+        </select>
+        <select id="channel-filter">
+          <option value="">全部渠道</option>
+        </select>
+        <button id="add-btn" class="primary">+ 新建投递</button>
+      </div>
+
+      <div id="table-view">
+        <table>
+          <thead>
+            <tr>
+              <th data-sort="company">公司</th>
+              <th data-sort="position">岗位</th>
+              <th data-sort="city">城市</th>
+              <th data-sort="channel">渠道</th>
+              <th data-sort="applied_date">投递日期</th>
+              <th data-sort="status">状态</th>
+              <th data-sort="updated_at">最近更新</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+        <p id="empty-hint" class="empty" hidden>还没有记录，点击右上角「+ 新建投递」开始。</p>
+      </div>
+
+      <div id="kanban-view" hidden></div>
+    </main>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay" hidden>
+    <div class="modal">
+      <h2 id="modal-title">新建投递</h2>
+      <form id="app-form">
+        <div class="form-grid">
+          <label>公司 *<input name="company" required maxlength="100"></label>
+          <label>岗位 *<input name="position" required maxlength="100"></label>
+          <label>城市<input name="city" maxlength="50"></label>
+          <label>渠道<input name="channel" list="channel-suggestions" maxlength="50"></label>
+          <label>投递日期<input name="applied_date" type="date"></label>
+          <label>状态<select name="status"></select></label>
+          <label class="span-2">岗位链接<input name="link" type="url" placeholder="https://..."></label>
+          <label class="span-2">备注<textarea name="notes" rows="3"></textarea></label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="primary">保存</button>
+          <button type="button" id="modal-cancel">取消</button>
+          <button type="button" id="record-delete-btn" class="danger" hidden>删除该记录</button>
+        </div>
+      </form>
+
+      <section id="events-section" hidden>
+        <h3>进展记录</h3>
+        <ul id="events-list" class="events-list"></ul>
+        <form id="event-form" class="event-form">
+          <input name="type" list="event-type-suggestions" placeholder="类型（笔试/一面…）" required>
+          <input name="event_time" type="datetime-local" required>
+          <input name="notes" placeholder="备注（地点/链接/面经）">
+          <button type="submit" class="primary" id="event-submit-btn">添加进展</button>
+          <button type="button" id="event-cancel-btn" hidden>取消编辑</button>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <datalist id="channel-suggestions">
+    <option value="官网"></option>
+    <option value="内推"></option>
+    <option value="BOSS直聘"></option>
+    <option value="牛客"></option>
+    <option value="宣讲会"></option>
+    <option value="其他"></option>
+  </datalist>
+  <datalist id="event-type-suggestions">
+    <option value="笔试"></option>
+    <option value="一面"></option>
+    <option value="二面"></option>
+    <option value="三面"></option>
+    <option value="HR面"></option>
+    <option value="其他"></option>
+  </datalist>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
